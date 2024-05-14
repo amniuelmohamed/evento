@@ -6,7 +6,7 @@ export default function Home() {
     return (
         <main className="grow flex flex-col items-center text-center pt-56 px-3 md:px-6 ">
             <H1>Find events around you</H1>
-            <p className="text-xl sm:text-2xl md:text-[1.7rem] text-white/70 mt-7 mb-10">
+            <p className="text-xl sm:text-2xl lg:text-[1.7rem] text-white/70 mt-7 mb-10">
                 Browse more than{" "}
                 <span className="font-bold italic underline text-lime-500">
                     10,000 events
