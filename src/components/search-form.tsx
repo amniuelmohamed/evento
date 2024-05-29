@@ -12,7 +12,7 @@ export default function SearchForm() {
 
         if (!searchText.trim()) return;
 
-        router.push(`/events/${searchText.trim()}`);
+        router.push(`/events/${searchText.trim().toLowerCase()}`);
     };
 
     return (

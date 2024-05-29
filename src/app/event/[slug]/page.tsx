@@ -1,29 +1,35 @@
 import Container from "@/components/container";
 import H1 from "@/components/h1";
-import { TEventoEvent } from "@/lib/types";
+import { getEvent } from "@/lib/server-utils";
+import { capitalize, undashedAndCapitalizedString } from "@/lib/utils";
+import { Metadata } from "next";
 import Image from "next/image";
 
-type EventPageProps = {
+type Props = {
     params: {
         slug: string;
     };
 };
 
-export default async function EventPage({ params }: EventPageProps) {
+export function generateMetadata({ params }: Props): Metadata {
     const { slug } = params;
 
-    const res = await fetch(
-        `https://bytegrad.com/course-assets/projects/evento/api/events/${slug}`
-    );
-    const event: TEventoEvent = res.ok ? await res.json() : null;
+    const eventNameCapitalized = undashedAndCapitalizedString(slug);
 
-    if (!event) {
-        return (
-            <main className="grow text-center text-xl mt-20">
-                Event not found 🫤
-            </main>
-        );
-    }
+    return {
+        title: eventNameCapitalized,
+        description: `Event page for ${eventNameCapitalized}`,
+    };
+}
+
+export async function generateStaticParams() {
+    return [{ slug: "dj-practice-session" }, { slug: "comedy-extravaganza" }];
+}
+
+export default async function EventPage({ params }: Props) {
+    const { slug } = params;
+
+    const event = await getEvent(slug);
 
     return (
         <main className="grow">
